@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {TextInput as InputNative, View, StyleSheet} from 'react-native';
+import {TextInput as InputNative, View, StyleSheet, Alert} from 'react-native';
 import {TextInput, Card, Title, Button, Paragraph} from 'react-native-paper';
 import SendIntentAndroid from 'react-native-send-intent';
 
@@ -16,13 +16,25 @@ function Sarifo({route, navigation}) {
     });
   }, []);
 
-  let USSDCode = route.params.isDollar
-    ? `*377*331114*${amount}#`
-    : `*277*331114*${amount}#`;
+  function sendUSSD() {
+    if (!amount) {
+      Alert.alert('Fadlan Gali Lacagta');
+      return;
+    }
 
-  function sendUSSD(code) {
-    if (!amount) return;
-    SendIntentAndroid.sendPhoneCall(code);
+    if (!route.params.isDollar && amount < 1000) {
+      Alert.alert('Kun Shilling wax ka yar ma sarifan kartid');
+      return;
+    }
+
+    let newAmount = amount.replace('.', '*');
+
+    let USSDCode = route.params.isDollar
+      ? `*377*331114*${newAmount}#`
+      : `*277*331114*${newAmount}#`;
+
+    //send code
+    SendIntentAndroid.sendPhoneCall(USSDCode);
   }
 
   return (
@@ -33,10 +45,14 @@ function Sarifo({route, navigation}) {
             style={styles.input}
             label="Gali Lacagta"
             value={amount}
-            onChangeText={(text) => setAmount(text)}
+            onChangeText={(text) => {
+              //reject invalid input
+              if (!isFinite(text)) return;
+              setAmount(text);
+            }}
             mode="outlined"
             render={(props) => (
-              <InputNative {...props} keyboardType="numeric" />
+              <InputNative {...props} keyboardType="numeric" autoFocus />
             )}
           />
 
@@ -45,7 +61,7 @@ function Sarifo({route, navigation}) {
             labelStyle={styles.btnText}
             icon="currency-usd"
             mode="contained"
-            onPress={() => sendUSSD(USSDCode)}>
+            onPress={() => sendUSSD()}>
             Sarifo
           </Button>
         </Card.Content>

@@ -7,23 +7,64 @@ import SendIntentAndroid from 'react-native-send-intent';
 
 function Sarifo({route, navigation}) {
   // money receiver
-  const [num, setNum] = React.useState('063');
+  const [num, setNum] = React.useState('');
   const [amount, setAmount] = React.useState('');
+  const [numLength, setNumLength] = React.useState(10);
+
+  // get params
+  const {type, isDollar} = route.params;
 
   React.useEffect(() => {
     // update header
     navigation.setOptions({
       title: `Zaad Services  ${route.params.isDollar ? 'Dollar' : 'Shilling'}`,
     });
+
+    if (type === 'kuiibso') {
+      setNumLength(6);
+    }
+
+    if (type === 'lacagdirid') {
+      setNum('063');
+    }
   }, []);
 
-  let USSDCode = route.params.isDollar
-    ? `*377*331114*${amount}#`
-    : `*277*331114*${amount}#`;
-
-  function sendUSSD(code) {
+  function sendUSSD() {
     if (!amount) return;
-    SendIntentAndroid.sendPhoneCall(code);
+    let USSDCode = '*888#';
+
+    //change . to *
+    let newAmount = amount.replace('.', '*');
+
+    // type: lacagdirid
+    if (type === 'lacagdirid') {
+      USSDCode = isDollar
+        ? `*880*${num}*${newAmount}#`
+        : `*220*${num}*${newAmount}#`;
+    }
+
+    // type: lacagdirid
+    if (type === 'kuiibso') {
+      USSDCode = isDollar
+        ? `*883*${num}*${newAmount}#`
+        : `*223*${num}*${newAmount}#`;
+    }
+
+    // type: kushubasho
+    if (type === 'kushubasho') {
+      USSDCode = isDollar
+        ? `*881*${num}*${newAmount}#`
+        : `*221*${num}*${newAmount}#`;
+    }
+
+    // type: labixid
+    if (type === 'labixid') {
+      USSDCode = isDollar
+        ? `*885*${num}*${newAmount}#`
+        : `*225*${num}*${newAmount}#`;
+    }
+
+    SendIntentAndroid.sendPhoneCall(USSDCode);
   }
 
   return (
@@ -32,16 +73,22 @@ function Sarifo({route, navigation}) {
         <Card.Content>
           <TextInput
             style={styles.input}
-            label="Gali Mobile-ka"
+            label="Gali Number-ka"
             value={num}
-            onChangeText={(text) => setNum(text)}
+            onChangeText={(text) => {
+              //only allow digits
+              if (/^$|^\d+$/.test(text)) {
+                setNum(text);
+              }
+              return;
+            }}
             mode="outlined"
             render={(props) => (
               <InputNative
                 {...props}
                 keyboardType="decimal-pad"
                 autoFocus
-                maxLength={10}
+                maxLength={numLength}
               />
             )}
           />
@@ -50,10 +97,14 @@ function Sarifo({route, navigation}) {
             style={styles.input}
             label="Gali Lacagta"
             value={amount}
-            onChangeText={(text) => setAmount(text)}
+            onChangeText={(text) => {
+              //reject invalid input
+              if (!isFinite(text)) return;
+              setAmount(text);
+            }}
             mode="outlined"
             render={(props) => (
-              <InputNative {...props} maxLength={6} keyboardType="numeric" />
+              <InputNative {...props} keyboardType="numeric" />
             )}
           />
 
@@ -62,7 +113,9 @@ function Sarifo({route, navigation}) {
             labelStyle={styles.btnText}
             icon="currency-usd"
             mode="contained"
-            onPress={() => sendUSSD(USSDCode)}>
+            onPress={() => {
+              sendUSSD();
+            }}>
             Send
           </Button>
         </Card.Content>

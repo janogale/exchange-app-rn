@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {View, StyleSheet, Dimensions} from 'react-native';
-import { Divider, Title, Paragraph} from 'react-native-paper';
+import {Divider, Title, Paragraph} from 'react-native-paper';
 // components
 import ListItem from '../components/ListItem';
 import Header from '../components/Header';
@@ -22,12 +22,7 @@ const ContactScreen = ({navigation}) => {
             icon="cellphone-android"
             code="063-4455224"
           />
-          <ListItem
-            title="Somtel"
-            description="065-4455224"
-            icon="phone"
-            code="065-4455224"
-          />
+
           <ListItem title="WhatsApp" icon="whatsapp" code="999" />
           <ListItem title="Facebook" icon="facebook" code="999" />
         </View>

@@ -26,9 +26,11 @@ const ZaadScreen = ({navigation}) => {
         <DataTable>
           <DataTable.Header>
             <DataTable.Title>
+              <Text style={localStyle.cellTitle}>Shilling</Text>
+            </DataTable.Title>
+            <DataTable.Title numeric>
               <Text style={localStyle.cellTitle}>Dollar</Text>
             </DataTable.Title>
-            <DataTable.Title numeric>Shilling</DataTable.Title>
           </DataTable.Header>
           <ScrollView style={{marginTop: 10}}>
             <DataTable.Row>
@@ -44,30 +46,32 @@ const ZaadScreen = ({navigation}) => {
             <DataTable.Row>
               <DataCell
                 text="Ku Iibso Shilling"
-                onClick={() => console.log('fn')}
+                onClick={() => runAdeeg({type: 'kuiibso'})}
               />
               <DataCell
                 text="Ku Iibso Dollar"
-                onClick={() => console.log('fn')}
+                onClick={() => runAdeeg({isDollar: true, type: 'kuiibso'})}
               />
             </DataTable.Row>
             <DataTable.Row>
               <DataCell
-                text="E-Voucher Shilling"
-                onClick={() => console.log('fn')}
+                text="Kushubasho Shilling"
+                onClick={() => runAdeeg({type: 'kushubasho'})}
               />
               <DataCell
-                text="E-Voucher Dollar"
-                onClick={() => console.log('fn')}
+                text="Kushubasho Dollar"
+                onClick={() => runAdeeg({isDollar: true, type: 'kushubasho'})}
               />
             </DataTable.Row>
             <DataTable.Row>
-              <DataCell text="Show Balance" onClick={() => console.log('fn')} />
-              <DataCell text="Show Balance" onClick={() => console.log('fn')} />
-            </DataTable.Row>
-            <DataTable.Row>
-              <DataCell text="Show Balance" onClick={() => console.log('fn')} />
-              <DataCell text="Show Balance" onClick={() => console.log('fn')} />
+              <DataCell
+                text="Lacag Labixid Shilling"
+                onClick={() => runAdeeg({type: 'kushubasho'})}
+              />
+              <DataCell
+                text="Lacag Labixid Dollar"
+                onClick={() => runAdeeg({isDollar: true, type: 'kushubasho'})}
+              />
             </DataTable.Row>
           </ScrollView>
         </DataTable>
@@ -88,14 +92,15 @@ const localStyle = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 12,
-    paddingHorizontal: 25,
+    paddingHorizontal: 20,
     borderTopLeftRadius: 45,
     borderTopRightRadius: 45,
     backgroundColor: '#fff',
   },
   cell: {
     color: '#fff',
-    fontWeight: 'bold',
+    padding: 3,
+
     elevation: 10,
     paddingLeft: 10,
     margin: 4,
