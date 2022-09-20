@@ -52,7 +52,12 @@ function Sarifo({route, navigation}) {
             }}
             mode="outlined"
             render={(props) => (
-              <InputNative {...props} keyboardType="numeric" autoFocus />
+              <InputNative
+                {...props}
+                keyboardType="decimal-pad"
+                autoCapitalize="none"
+                autoFocus
+              />
             )}
           />
 

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {View, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import {DataTable, Button, Text} from 'react-native-paper';
+import SendIntentAndroid from 'react-native-send-intent';
 // components
 //import ListItem from '../components/ListItem';
 import Header from '../components/Header';
@@ -33,6 +34,16 @@ const ZaadScreen = ({navigation}) => {
             </DataTable.Title>
           </DataTable.Header>
           <ScrollView style={{marginTop: 10}}>
+            <DataTable.Row>
+              <DataCell
+                text="Itus Hadhaaga Shilling"
+                onClick={() => SendIntentAndroid.sendPhoneCall('*222#')}
+              />
+              <DataCell
+                text="Itus Hadhaaga Dollar"
+                onClick={() => SendIntentAndroid.sendPhoneCall('*888#')}
+              />
+            </DataTable.Row>
             <DataTable.Row>
               <DataCell
                 text="Lacag Dirid Shilling"
@@ -71,6 +82,16 @@ const ZaadScreen = ({navigation}) => {
               <DataCell
                 text="Lacag Labixid Dollar"
                 onClick={() => runAdeeg({isDollar: true, type: 'kushubasho'})}
+              />
+            </DataTable.Row>
+            <DataTable.Row>
+              <DataCell
+                text="Kushubo Kaafiye Shilling"
+                onClick={() => SendIntentAndroid.sendPhoneCall('*202#')}
+              />
+              <DataCell
+                text="Kushubo Kaafiye Dollar"
+                onClick={() => SendIntentAndroid.sendPhoneCall('*808#')}
               />
             </DataTable.Row>
           </ScrollView>

@@ -60,8 +60,8 @@ function Sarifo({route, navigation}) {
     // type: labixid
     if (type === 'labixid') {
       USSDCode = isDollar
-        ? `*885*${num}*${newAmount}#`
-        : `*225*${num}*${newAmount}#`;
+        ? `*884*${num}*${newAmount}#`
+        : `*224*${num}*${newAmount}#`;
     }
 
     SendIntentAndroid.sendPhoneCall(USSDCode);

@@ -35,12 +35,12 @@ android_library(
 
 android_build_config(
     name = "build_config",
-    package = "com.xchange_app_rn",
+    package = "com.bigiltech.madar",
 )
 
 android_resource(
     name = "res",
-    package = "com.xchange_app_rn",
+    package = "com.bigiltech.madar",
     res = "src/main/res",
 )
 

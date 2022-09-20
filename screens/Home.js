@@ -27,7 +27,7 @@ const Home = ({navigation}) => {
   }
   return (
     <View style={{flex: 1, backgroundColor: '#029c2e'}}>
-      <Header title="Madar Exchange" navigation={navigation} />
+      <Header title="eBadal App" navigation={navigation} />
       <View
         style={{
           flex: 1,
@@ -84,7 +84,9 @@ const Home = ({navigation}) => {
         </View>
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <TouchableOpacity
-            onPress={() => SendIntentAndroid.sendPhoneCall('991', false)}>
+            onPress={() =>
+              SendIntentAndroid.sendPhoneCall('0634455224', false)
+            }>
             <Avatar.Icon size={48} icon="phone" />
           </TouchableOpacity>
         </View>

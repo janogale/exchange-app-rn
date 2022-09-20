@@ -1,5 +1,12 @@
 import * as React from 'react';
-import {View, StyleSheet, Dimensions} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  Linking,
+  Alert,
+  Share,
+} from 'react-native';
 import {Divider, Title, Paragraph} from 'react-native-paper';
 // components
 import ListItem from '../components/ListItem';
@@ -20,16 +27,67 @@ const ContactScreen = ({navigation}) => {
             title="Telesom"
             description="063-4455224"
             icon="cellphone-android"
-            code="063-4455224"
+            code="0634455224"
           />
 
-          <ListItem title="WhatsApp" icon="whatsapp" code="999" />
-          <ListItem title="Facebook" icon="facebook" code="999" />
+          <ListItem title="WhatsApp" icon="whatsapp" fn={openWhatsappUrl} />
+          <ListItem title="Facebook" icon="facebook" fn={openURL} />
+          <ListItem title="Share App with Friends" icon="share" fn={appShare} />
         </View>
       </View>
     </View>
   );
 };
+
+function openWhatsappUrl() {
+  const url = 'whatsapp://send?phone=252634750008';
+  Linking.canOpenURL(url).then((supported) => {
+    if (supported) {
+      Linking.openURL(url);
+    } else {
+      Alert.alert('Alert', 'WhatsApp is not installed');
+    }
+  });
+}
+
+function openURL(
+  url = 'https://www.facebook.com/151900699036469?referrer=whatsapp',
+) {
+  Linking.canOpenURL(url).then((supported) => {
+    if (supported) {
+      Linking.openURL(url);
+    } else {
+      console.log("Don't know how to open URI: " + url);
+    }
+  });
+}
+
+function appShare() {
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        title: 'App link',
+        message:
+          'Please install Madar Exchange App , AppLink :https://play.google.com/store/apps/details?id=com.bigiltech.madar',
+        url:
+          'https://play.google.com/store/apps/details?id=com.bigiltech.madar',
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  onShare();
+}
 
 const localStyle = StyleSheet.create({
   container: {

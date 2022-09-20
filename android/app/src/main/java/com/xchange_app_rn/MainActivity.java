@@ -1,4 +1,4 @@
-package com.xchange_app_rn;
+package com.bigiltech.madar;
 
 import com.facebook.react.ReactActivity;
 
